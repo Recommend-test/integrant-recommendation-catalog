@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * The Class ProductCatalogApplication.
  */
 @SpringBootApplication
-public class ProductCatalogApplication {
+public class ProductCategoryApplication {
 
 
 
@@ -21,11 +21,11 @@ public class ProductCatalogApplication {
 	public static void main(String[] args) {
 
 		/** The logger. */
-		Logger logger = LoggerFactory.getLogger(ProductCatalogApplication.class);
+		Logger logger = LoggerFactory.getLogger(ProductCategoryApplication.class);
 
 		try {
 
-			SpringApplication.run(ProductCatalogApplication.class, args);
+			SpringApplication.run(ProductCategoryApplication.class, args);
 
 			logger.info("Application Started Successfully");
 

@@ -54,10 +54,10 @@ public class ProductCategoryController {
 	/**
 	 * Save new catalog.
 	 *
-	 * @param productCatalogDto the product catalog dto
+	 * @param productCatalogDto the product category dto
 	 */
 	@ApiOperation(value = "Add new Product Category")
-	@PostMapping("/products")
+	@PostMapping("/categories")
 	public ResponseEntity<Object> saveNewCategory(@Validated @RequestBody ProductCategory productCategoryDto) {
 
 		Integer productCategoryId = productService.saveProductCategory(productCategoryDto);
@@ -75,7 +75,7 @@ public class ProductCategoryController {
 	 * @return the all catalogs
 	 */
 	@ApiOperation(value = "View a list of available product Categories", response = List.class)
-	@GetMapping("/products")
+	@GetMapping("/categories")
 	public List<ProductCategory> getAllCategories() {
 
 		return productService.findAllProductCategories();
@@ -88,14 +88,14 @@ public class ProductCategoryController {
 	 * @return the all catalogs
 	 */
 	@ApiOperation(value = "get Product Category by Id")
-	@GetMapping("/products/{id}")
+	@GetMapping("/categories/{id}")
 	public ProductCategory getProductCategoryById(@Validated @PathVariable Integer id) {
 
 		return productService.findProductCategory(id);
 	}
 	
 	@ApiOperation(value = "update Product Category")
-	@PutMapping("/products")
+	@PutMapping("/categories")
 	public void updateProductCategoryById(@Validated @RequestBody ProductCategory productCategory) {
 
 		
@@ -103,7 +103,7 @@ public class ProductCategoryController {
 	}
 	
 	@ApiOperation(value = "delete Product Category by Id")
-	@DeleteMapping("/products/{id}")
+	@DeleteMapping("/categories/{id}")
 	public void deleteProductCategoryById(@Validated @PathVariable Integer id) {
 
 		productService.deleteProductCategory(id);

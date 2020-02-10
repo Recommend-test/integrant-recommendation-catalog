@@ -55,9 +55,7 @@ public class ProductServiceImp implements ProductService{
     @Override
 	public ProductCategory findProductCategory(Integer productCategoryId) {
     	
-    	ProductCategory productCategory = productCategoryRepository.findById(productCategoryId).orElse(null);
-    	
-		return productCategory;
+    	return productCategoryRepository.findById(productCategoryId).orElse(null);
 	}
 
 	@Override

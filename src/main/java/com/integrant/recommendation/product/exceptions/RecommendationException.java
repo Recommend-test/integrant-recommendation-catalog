@@ -1,5 +1,8 @@
 package com.integrant.recommendation.product.exceptions;
 
+/**
+ * The Class RecommendationException.
+ */
 public class RecommendationException extends  Exception {
 
 	/** The Constant serialVersionUID. */
@@ -12,7 +15,8 @@ public class RecommendationException extends  Exception {
 	private final Integer code;
 
 	/**
-	 * Instantiates a new loan engine exception.
+	 * Instantiates a new recommendation exception.
+	 *
 	 * @param code the code
 	 * @param message the message
 	 */
@@ -23,17 +27,19 @@ public class RecommendationException extends  Exception {
 
 	/**
 	 * Gets the code.
+	 *
 	 * @return the code
 	 */
 	public Integer getCode() {
 		return this.code;
 	}
 
+
 	/**
-	 * Gets exception message.
+	 * Gets the message.
+	 *
 	 * @return the message
 	 */
-
 	@Override
 	public String getMessage() {
 		return this.message;

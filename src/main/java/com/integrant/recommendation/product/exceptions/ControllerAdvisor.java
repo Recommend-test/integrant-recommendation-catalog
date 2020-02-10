@@ -16,9 +16,19 @@ import org.springframework.web.context.request.WebRequest;
 import com.integrant.recommendation.product.model.RecommendationErrorResponse;
 
 
+/**
+ * The Class ControllerAdvisor.
+ */
 @ControllerAdvice
 public class ControllerAdvisor {
 
+	/**
+	 * Handle bad request exception.
+	 *
+	 * @param ex the ex
+	 * @param request the request
+	 * @return the response entity
+	 */
 	@ExceptionHandler(BadRequestException.class)
 	public ResponseEntity<RecommendationErrorResponse> handleBadRequestException(
 			BadRequestException ex, WebRequest request) {
@@ -30,6 +40,13 @@ public class ControllerAdvisor {
 		return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 	}
 
+	/**
+	 * Handle message not exception.
+	 *
+	 * @param ex the ex
+	 * @param request the request
+	 * @return the response entity
+	 */
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	public ResponseEntity<Object> handleMessageNotException(Exception ex, WebRequest request) {
 
@@ -40,6 +57,13 @@ public class ControllerAdvisor {
 	}
 
 
+	/**
+	 * Handle message not exception.
+	 *
+	 * @param ex the ex
+	 * @param request the request
+	 * @return the response entity
+	 */
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> handleMessageNotException(MethodArgumentNotValidException ex, WebRequest request) {
 		

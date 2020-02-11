@@ -5,99 +5,133 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import com.integrant.recommendation.product.model.ProductCategory;
-import com.integrant.recommendation.product.repository.ProductCategoryRepository;
+import com.integrant.recommendation.product.dto.ProductDto;
+import com.integrant.recommendation.product.exceptions.BadRequestException;
+import com.integrant.recommendation.product.model.Product;
+import com.integrant.recommendation.product.model.ProductPage;
+import com.integrant.recommendation.product.repository.ProductRepository;
 
 /**
- * The Class ProductService.
+ * The Class ProductServiceImp.
  */
 @Service
 public class ProductServiceImp implements ProductService{
 	
-	/** The product category repository. */
+	/** The product repository. */
 	@Autowired
-	private ProductCategoryRepository productCategoryRepository;
-	
-    /** The logger. */
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
-	
+	private ProductRepository productRepository;
 
-    /**
-     * Save product category.
-     *
-     * @param productCategory the product category
-     * @return the integer
-     */
-    @Override
-	public Integer saveProductCategory(ProductCategory productCategory) {
-		
-    	productCategoryRepository.save(productCategory);
-		
-		return productCategory.getId();
-	}
-	
+	/** The logger. */
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    /**
-     * Find all product categories.
-     *
-     * @return the list
-     */
-    @Override
-	public List<ProductCategory> findAllProductCategories() {
-		return productCategoryRepository.findAll();
-	}
-	
-
-    /**
-     * Find product category.
-     *
-     * @param productCategoryId the product category id
-     * @return the product category
-     */
-    @Override
-	public ProductCategory findProductCategory(Integer productCategoryId) {
-    	
-    	return productCategoryRepository.findById(productCategoryId).orElse(null);
-	}
 
 	/**
-	 * Delete product category.
+	 * Save product.
 	 *
-	 * @param productCategoryId the product category id
+	 * @param product the product
+	 * @return the integer
 	 */
 	@Override
-	public void deleteProductCategory(Integer productCategoryId) {
-		
-		productCategoryRepository.deleteById(productCategoryId);
+	public Integer saveProduct(Product product) {
+
+		productRepository.save(product);
+
+		return product.getId();
 	}
 
 	/**
-	 * Update product category.
+	 * Find all products.
 	 *
-	 * @param productCategory the product category
-	 * @return the product category
-	 */
-	@Override
-	public ProductCategory updateProductCategory(ProductCategory productCategory) {
-		
-		return productCategoryRepository.save(productCategory);
-
-	}
-	
-	/**
-	 * Find product category by offset and limit.
-	 *
-	 * @param offset the offset
-	 * @param limit the limit
 	 * @return the list
 	 */
 	@Override
-	public List<ProductCategory> findProductCategoryByOffsetAndLimit(Integer offset, Integer limit) {
-		
-		return productCategoryRepository.findAll(PageRequest.of(offset, limit)).getContent();
+	public List<Product> findAllProducts() {
+		return productRepository.findAll();
 	}
+
+	/**
+	 * Find product.
+	 *
+	 * @param productId the product id
+	 * @return the product
+	 */
+	@Override
+	public Product findProduct(Integer productId) {
+
+		return productRepository.findById(productId).orElse(null);
+	}
+
+	/**
+	 * Delete product.
+	 *
+	 * @param productId the product id
+	 */
+	@Override
+	public void deleteProduct(Integer productId) {
+
+		productRepository.deleteById(productId);
+	}
+
+	/**
+	 * Update product.
+	 *
+	 * @param product the product
+	 * @return the product
+	 */
+	@Override
+	public Product updateProduct(Product product) {
+
+		return productRepository.save(product);
+
+	}
+
+	/**
+	 * Find products by offset and limit.
+	 *
+	 * @param offset the offset
+	 * @param limit the limit
+	 * @return the product page
+	 */
+	@Override
+	public ProductPage findProductsByOffsetAndLimit(Integer categoryId, Integer offset, Integer limit) {
+
+		Page<Product> page = productRepository.findAll(PageRequest.of(offset, limit));
+			
+		return new ProductPage(page.getContent(), page.getTotalElements());
+	}
+
+	/**
+	 * Validate product dto.
+	 *
+	 * @param productDto the product dto
+	 * @throws BadRequestException the bad request exception
+	 */
+	@Override
+	public void validateProductDto(ProductDto productDto) throws BadRequestException {
+
+		Product product = productRepository.findProductByproductName(productDto.getName());
+
+		if(product != null)
+			throw new BadRequestException("This product already exists");
+	}
+
+	/**
+	 * Validate product.
+	 *
+	 * @param product the product
+	 * @throws BadRequestException the bad request exception
+	 */
+	public void validateProduct(Product product) throws BadRequestException {
+
+		Product currentProduct = productRepository.findById(product.getId()).orElse(null);
+
+		if(currentProduct == null)
+			throw new BadRequestException("This product not exists");
+	}
+
 
 }

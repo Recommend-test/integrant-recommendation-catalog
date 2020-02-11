@@ -2,7 +2,10 @@ package com.integrant.recommendation.product.service;
 
 import java.util.List;
 
-import com.integrant.recommendation.product.model.ProductCategory;
+import com.integrant.recommendation.product.dto.ProductDto;
+import com.integrant.recommendation.product.exceptions.BadRequestException;
+import com.integrant.recommendation.product.model.Product;
+import com.integrant.recommendation.product.model.ProductPage;
 
 /**
  * The Interface ProductService.
@@ -10,50 +13,67 @@ import com.integrant.recommendation.product.model.ProductCategory;
 public interface ProductService {
 	
 	/**
-	 * Find all product categories.
+	 * Find all products.
 	 *
 	 * @return the list
 	 */
-	public List<ProductCategory> findAllProductCategories();
+	public List<Product> findAllProducts();
 
 	/**
-	 * Save product category.
+	 * Save product.
 	 *
-	 * @param productCatalog the product catalog
-	 * @return the string
+	 * @param product the product
+	 * @return the integer
 	 */
-	public Integer saveProductCategory(ProductCategory productCatalog);
+	public Integer saveProduct(Product product);
 	
 	/**
-	 * Find product category.
+	 * Find product.
 	 *
-	 * @param productCategoryId the product category id
-	 * @return the product category
+	 * @param productId the product id
+	 * @return the product
 	 */
-	public ProductCategory findProductCategory(Integer productCategoryId);
+	public Product findProduct(Integer productId);
 	
 	/**
-	 * Delete product category.
+	 * Delete product.
 	 *
-	 * @param productCategoryId the product category id
-	 * @return the product category
+	 * @param productId the product id
 	 */
-	public void deleteProductCategory(Integer productCategoryId);
+	public void deleteProduct(Integer productId);
 	
 	/**
-	 * Update product category.
+	 * Update product.
 	 *
-	 * @param productCategory the product category
-	 * @return the product category
+	 * @param product the product
+	 * @return the product
 	 */
-	public ProductCategory updateProductCategory(ProductCategory productCategory);
+	public Product updateProduct(Product product);
 	
 	/**
-	 * Find product category by offset and limit.
+	 * Find products by offset and limit.
 	 *
+	 * @param categoryId the category id
 	 * @param offset the offset
 	 * @param limit the limit
-	 * @return the list
+	 * @return the product page
 	 */
-	public List<ProductCategory> findProductCategoryByOffsetAndLimit(Integer offset, Integer limit);
+	public ProductPage findProductsByOffsetAndLimit(Integer categoryId, Integer offset, Integer limit);
+	
+	/**
+	 * Validate product dto.
+	 *
+	 * @param productDto the product dto
+	 * @throws BadRequestException the bad request exception
+	 */
+	public void validateProductDto(ProductDto productDto) throws BadRequestException;
+	
+	/**
+	 * Validate product.
+	 *
+	 * @param product the product
+	 * @throws BadRequestException the bad request exception
+	 */
+	public void validateProduct(Product product) throws BadRequestException;
+
 }

@@ -21,8 +21,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.integrant.recommendation.product.dto.CategoryDto;
+import com.integrant.recommendation.product.exceptions.BadRequestException;
 import com.integrant.recommendation.product.model.ProductCategory;
-import com.integrant.recommendation.product.service.ProductServiceImp;
+import com.integrant.recommendation.product.model.ProductCategoryPage;
+import com.integrant.recommendation.product.service.CategoryServiceImp;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -43,11 +46,11 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @CrossOrigin
 @RequestMapping("/api/v1")
-public class ProductCategoryController {
+public class CategoryController {
 
 	/** The product service. */
 	@Autowired
-	private ProductServiceImp productService;
+	private CategoryServiceImp categoryService;
 
 	/** The logger. */
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -55,19 +58,23 @@ public class ProductCategoryController {
 	/**
 	 * Save new catalog.
 	 *
-	 * @param productCatalogDto the product category dto
+	 * @param productCategoryDto the product category dto
+	 * @return the response entity
+	 * @throws BadRequestException the bad request exception
 	 */
 	@ApiOperation(value = "Add new Product Category")
 	@PostMapping("/categories")
-	public ResponseEntity<Object> saveNewCategory(@Validated @RequestBody ProductCategory productCategoryDto) {
+	public ResponseEntity<Object> saveNewCategory(@Validated @RequestBody CategoryDto productCategoryDto) throws BadRequestException {
+		
+		categoryService.validateProductCategoryDto(productCategoryDto);
 
-		Integer productCategoryId = productService.saveProductCategory(productCategoryDto);
+		Integer productCategoryId = categoryService.saveProductCategory(productCategoryDto.build());
 
 		Map<String, Object> body = new LinkedHashMap<>();
 
 		body.put("productCategoryId", productCategoryId);
 
-		return new ResponseEntity<>(body, HttpStatus.OK);
+		return new ResponseEntity<>(body, HttpStatus.CREATED);
 	}
 
 	/**
@@ -79,7 +86,7 @@ public class ProductCategoryController {
 	@GetMapping("/categories")
 	public List<ProductCategory> getAllCategories() {
 
-		return productService.findAllProductCategories();
+		return categoryService.findAllProductCategories();
 	}
 
 	/**
@@ -92,28 +99,47 @@ public class ProductCategoryController {
 	@GetMapping("/categories/{id}")
 	public ProductCategory getProductCategoryById(@Validated @PathVariable Integer id) {
 
-		return productService.findProductCategory(id);
+		return categoryService.findProductCategory(id);
 	}
 	
+	/**
+	 * Gets the product categories by offset and limit.
+	 *
+	 * @param offset the offset
+	 * @param limit the limit
+	 * @return the product categories by offset and limit
+	 */
 	@ApiOperation(value = "get List of Product Category by Offset and Limit")
 	@GetMapping("/categories/page")
-	public List<ProductCategory> getProductCategoriesByOffsetAndLimit(@Validated @RequestParam Integer offset, @Validated @RequestParam Integer limit) {
+	public ProductCategoryPage getProductCategoriesByOffsetAndLimit(@Validated @RequestParam Integer offset, @Validated @RequestParam Integer limit) {
 
-		return productService.findProductCategoryByOffsetAndLimit(offset, limit);
+		return categoryService.findProductCategoryByOffsetAndLimit(offset, limit);
 	}
 	
+	/**
+	 * Update product category by id.
+	 *
+	 * @param productCategory the product category
+	 * @throws BadRequestException the bad request exception
+	 */
 	@ApiOperation(value = "update Product Category")
 	@PutMapping("/categories")
-	public void updateProductCategoryById(@Validated @RequestBody ProductCategory productCategory) {
+	public void updateProductCategory(@Validated @RequestBody ProductCategory productCategory) throws BadRequestException {
 
+		categoryService.validateProductCategory(productCategory);
 		
-		productService.updateProductCategory(productCategory);
+		categoryService.updateProductCategory(productCategory);
 	}
 	
+	/**
+	 * Delete product category by id.
+	 *
+	 * @param id the id
+	 */
 	@ApiOperation(value = "delete Product Category by Id")
 	@DeleteMapping("/categories/{id}")
 	public void deleteProductCategoryById(@Validated @PathVariable Integer id) {
 
-		productService.deleteProductCategory(id);
+		categoryService.deleteProductCategory(id);
 	}
 }

@@ -43,8 +43,17 @@ public interface ProductService {
 	/**
 	 * Update product category.
 	 *
-	 * @param productCategoryId the product category id
+	 * @param productCategory the product category
 	 * @return the product category
 	 */
 	public ProductCategory updateProductCategory(ProductCategory productCategory);
+	
+	/**
+	 * Find product category by offset and limit.
+	 *
+	 * @param offset the offset
+	 * @param limit the limit
+	 * @return the list
+	 */
+	public List<ProductCategory> findProductCategoryByOffsetAndLimit(Integer offset, Integer limit);
 }

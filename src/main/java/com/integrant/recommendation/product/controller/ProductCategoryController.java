@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.integrant.recommendation.product.model.ProductCategory;
@@ -92,6 +93,13 @@ public class ProductCategoryController {
 	public ProductCategory getProductCategoryById(@Validated @PathVariable Integer id) {
 
 		return productService.findProductCategory(id);
+	}
+	
+	@ApiOperation(value = "get List of Product Category by Offset and Limit")
+	@GetMapping("/categories/page")
+	public List<ProductCategory> getProductCategoriesByOffsetAndLimit(@Validated @RequestParam Integer offset, @Validated @RequestParam Integer limit) {
+
+		return productService.findProductCategoryByOffsetAndLimit(offset, limit);
 	}
 	
 	@ApiOperation(value = "update Product Category")

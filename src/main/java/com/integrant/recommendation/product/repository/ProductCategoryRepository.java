@@ -6,9 +6,8 @@ import org.springframework.stereotype.Repository;
 import com.integrant.recommendation.product.model.ProductCategory;
 
 /**
- * The Interface ProductCatalogRepository.
+ * The Interface ProductCategoryRepository.
  */
 @Repository
 public interface ProductCategoryRepository extends JpaRepository<ProductCategory, Integer>{
-
 }

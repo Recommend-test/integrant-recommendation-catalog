@@ -1,5 +1,7 @@
 package com.integrant.recommendation.product.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,4 +20,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	 * @return the product
 	 */
 	public Product findProductByProductName(String name);
+	
+	public Page<Product> findAllProductsByCategoryId(Integer categoryId, Pageable pageable);
 }

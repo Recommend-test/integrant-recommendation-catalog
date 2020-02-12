@@ -42,10 +42,14 @@ public class ProductCategory implements Serializable {
 	public ProductCategory() {
 	}
 
+	/**
+	 * Instantiates a new product category.
+	 *
+	 * @param id the id
+	 */
 	public ProductCategory(Integer id) {
 		this.id = id;
 	}
-
 
 	/**
 	 * Instantiates a new product category.
@@ -90,7 +94,7 @@ public class ProductCategory implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "ProductCategory [id=" + id + ", categoryName=" + categoryName + "]";
+		return "ProductCategory [id=" + id + ", categoryName=" + categoryName + ", products=" + products + "]";
 	}
 }
 

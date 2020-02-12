@@ -60,6 +60,16 @@ public interface ProductService {
 	public ProductPage findProductsByOffsetAndLimit(Integer offset, Integer limit);
 	
 	/**
+	 * Find products by category offset and limit.
+	 *
+	 * @param categoryId the category id
+	 * @param offset the offset
+	 * @param limit the limit
+	 * @return the product page
+	 */
+	public ProductPage findProductsByCategoryOffsetAndLimit(Integer categoryId, Integer offset, Integer limit);
+	
+	/**
 	 * Validate product dto.
 	 *
 	 * @param productDto the product dto

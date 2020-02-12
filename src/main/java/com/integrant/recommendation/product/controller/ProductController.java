@@ -112,10 +112,24 @@ public class ProductController {/**
 		 * @return the product categories by offset and limit
 		 */
 		@ApiOperation(value = "get List of Products by Offset and Limit")
-		@GetMapping("/products")
-		public ProductPage getProductsByCategoryIdOffsetAndLimit(@Validated @RequestParam Integer offset, @Validated @RequestParam Integer limit) {
+		@GetMapping("/products/page")
+		public ProductPage getProductsOffsetAndLimit(@Validated @RequestParam Integer offset, @Validated @RequestParam Integer limit) {
 
 			return productService.findProductsByOffsetAndLimit(offset, limit);
+		}
+		
+		/**
+		 * Gets the product categories by offset and limit.
+		 *
+		 * @param offset the offset
+		 * @param limit the limit
+		 * @return the product categories by offset and limit
+		 */
+		@ApiOperation(value = "get List of Products by Category, Offset and Limit")
+		@GetMapping("/categories/{id}/products")
+		public ProductPage getProductsByCategoryIdOffsetAndLimit(@Validated @PathVariable Integer id, @Validated @RequestParam Integer offset, @Validated @RequestParam Integer limit) {
+
+			return productService.findProductsByCategoryOffsetAndLimit(id, offset, limit);
 		}
 		
 		/**

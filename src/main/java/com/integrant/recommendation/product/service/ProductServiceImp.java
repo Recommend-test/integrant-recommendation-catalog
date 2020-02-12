@@ -103,6 +103,22 @@ public class ProductServiceImp implements ProductService{
 			
 		return new ProductPage(page.getContent(), page.getTotalElements());
 	}
+	
+	/**
+	 * Find products by category offset and limit.
+	 *
+	 * @param categoryId the category id
+	 * @param offset the offset
+	 * @param limit the limit
+	 * @return the product page
+	 */
+	@Override
+	public ProductPage findProductsByCategoryOffsetAndLimit(Integer categoryId, Integer offset, Integer limit) {
+
+		Page<Product> page = productRepository.findAllProductsByCategoryId(categoryId, PageRequest.of(offset, limit));
+			
+		return new ProductPage(page.getContent(), page.getTotalElements());
+	}
 
 	/**
 	 * Validate product dto.

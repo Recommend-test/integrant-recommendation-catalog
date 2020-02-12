@@ -12,10 +12,10 @@ import com.integrant.recommendation.product.model.Product;
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
 	/**
-	 * Find product by name.
+	 * Find product by product name.
 	 *
 	 * @param name the name
 	 * @return the product
 	 */
-	public Product findProductByproductName(String name);
+	public Product findProductByProductName(String name);
 }

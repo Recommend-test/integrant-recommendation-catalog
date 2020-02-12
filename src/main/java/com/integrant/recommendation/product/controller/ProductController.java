@@ -112,11 +112,10 @@ public class ProductController {/**
 		 * @return the product categories by offset and limit
 		 */
 		@ApiOperation(value = "get List of Products by Offset and Limit")
-		@GetMapping("/categories/{id}/products")
-		public ProductPage getProductsByCategoryIdOffsetAndLimit(@Validated @PathVariable Integer id, 
-				@Validated @RequestParam Integer offset, @Validated @RequestParam Integer limit) {
+		@GetMapping("/products")
+		public ProductPage getProductsByCategoryIdOffsetAndLimit(@Validated @RequestParam Integer offset, @Validated @RequestParam Integer limit) {
 
-			return productService.findProductsByOffsetAndLimit(id, offset, limit);
+			return productService.findProductsByOffsetAndLimit(offset, limit);
 		}
 		
 		/**

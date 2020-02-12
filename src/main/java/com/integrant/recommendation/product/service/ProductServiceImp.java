@@ -97,7 +97,7 @@ public class ProductServiceImp implements ProductService{
 	 * @return the product page
 	 */
 	@Override
-	public ProductPage findProductsByOffsetAndLimit(Integer categoryId, Integer offset, Integer limit) {
+	public ProductPage findProductsByOffsetAndLimit(Integer offset, Integer limit) {
 
 		Page<Product> page = productRepository.findAll(PageRequest.of(offset, limit));
 			
@@ -113,7 +113,7 @@ public class ProductServiceImp implements ProductService{
 	@Override
 	public void validateProductDto(ProductDto productDto) throws BadRequestException {
 
-		Product product = productRepository.findProductByproductName(productDto.getName());
+		Product product = productRepository.findProductByProductName(productDto.getName());
 
 		if(product != null)
 			throw new BadRequestException("This product already exists");

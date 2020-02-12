@@ -38,7 +38,7 @@ public class Product implements Serializable {
 	private String productDescription;
 	
 	@ManyToOne
-	@JoinColumn(name="category_id")
+	@JoinColumn(name="category_id", nullable=false)
 	@JsonIgnore
 	private ProductCategory category;
 

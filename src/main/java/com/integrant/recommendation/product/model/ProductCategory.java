@@ -33,7 +33,7 @@ public class ProductCategory implements Serializable {
 	private String categoryName;
 	
 	/** The products. */
-	@OneToMany(mappedBy="category", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="category")
 	private List<Product> products;
 
 	/**

@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.integrant.recommendation.product.dto.ProductDto;
@@ -99,7 +100,7 @@ public class ProductServiceImp implements ProductService{
 	@Override
 	public ProductPage findProductsByOffsetAndLimit(Integer offset, Integer limit) {
 
-		Page<Product> page = productRepository.findAll(PageRequest.of(offset, limit));
+		Page<Product> page = productRepository.findAll(PageRequest.of(offset, limit, Sort.by("id")));
 
 		return new ProductPage(page.getContent(), page.getTotalElements());
 	}

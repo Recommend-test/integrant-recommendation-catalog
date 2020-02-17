@@ -114,7 +114,7 @@ public class CategoryServiceImp implements CategoryService{
 	@Override
 	public ProductCategoryPage findProductCategoryByOffsetAndLimit(Integer offset, Integer limit) {
 
-		Page<ProductCategory> page = productCategoryRepository.findAll(PageRequest.of(offset, limit, Sort.by("category_id")));
+		Page<ProductCategory> page = productCategoryRepository.findAll(PageRequest.of(offset, limit, Sort.by("id")));
 
 		return new ProductCategoryPage(page.getContent(), page.getTotalElements());
 	}

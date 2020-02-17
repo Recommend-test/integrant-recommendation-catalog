@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.integrant.recommendation.product.dto.CategoryDto;
 import com.integrant.recommendation.product.exceptions.BadRequestException;
+import com.integrant.recommendation.product.exceptions.DataConflictException;
 import com.integrant.recommendation.product.model.ProductCategory;
 import com.integrant.recommendation.product.model.ProductCategoryPage;
 
@@ -39,9 +40,9 @@ public interface CategoryService {
 	 * Delete product category.
 	 *
 	 * @param productCategoryId the product category id
-	 * @return the product category
+	 * @throws DataConflictException the data conflict exception
 	 */
-	public void deleteProductCategory(Integer productCategoryId);
+	public void deleteProductCategory(Integer productCategoryId) throws DataConflictException;
 	
 	/**
 	 * Update product category.

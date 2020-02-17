@@ -4,8 +4,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.integrant.recommendation.product.dto.CategoryDto;
 import com.integrant.recommendation.product.exceptions.BadRequestException;
+import com.integrant.recommendation.product.exceptions.DataConflictException;
 import com.integrant.recommendation.product.model.ProductCategory;
 import com.integrant.recommendation.product.model.ProductCategoryPage;
 import com.integrant.recommendation.product.service.CategoryServiceImp;
@@ -51,9 +50,6 @@ public class CategoryController {
 	/** The product service. */
 	@Autowired
 	private CategoryServiceImp categoryService;
-
-	/** The logger. */
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	/**
 	 * Save new catalog.
@@ -135,10 +131,11 @@ public class CategoryController {
 	 * Delete product category by id.
 	 *
 	 * @param id the id
+	 * @throws DataConflictException the data conflict exception
 	 */
 	@ApiOperation(value = "delete Product Category by Id")
 	@DeleteMapping("/categories/{id}")
-	public void deleteProductCategoryById(@Validated @PathVariable Integer id) {
+	public void deleteProductCategoryById(@Validated @PathVariable Integer id) throws DataConflictException {
 
 		categoryService.deleteProductCategory(id);
 	}

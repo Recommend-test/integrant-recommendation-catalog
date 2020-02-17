@@ -7,13 +7,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.integrant.recommendation.product.dto.CategoryDto;
 import com.integrant.recommendation.product.exceptions.BadRequestException;
+import com.integrant.recommendation.product.exceptions.DataConflictException;
+import com.integrant.recommendation.product.model.Product;
 import com.integrant.recommendation.product.model.ProductCategory;
 import com.integrant.recommendation.product.model.ProductCategoryPage;
 import com.integrant.recommendation.product.repository.CategoryRepository;
+import com.integrant.recommendation.product.repository.ProductRepository;
 
 /**
  * The Class ProductService.
@@ -24,6 +28,9 @@ public class CategoryServiceImp implements CategoryService{
 	/** The product category repository. */
 	@Autowired
 	private CategoryRepository productCategoryRepository;
+	
+	@Autowired
+	private ProductRepository productRepository;
 
 	/** The logger. */
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -71,11 +78,17 @@ public class CategoryServiceImp implements CategoryService{
 	 * Delete product category.
 	 *
 	 * @param productCategoryId the product category id
+	 * @throws DataConflictException the data conflict exception
 	 */
 	@Override
-	public void deleteProductCategory(Integer productCategoryId) {
+	public void deleteProductCategory(Integer productCategoryId) throws DataConflictException {
 
-		productCategoryRepository.deleteById(productCategoryId);
+			List<Product> products = productRepository.findAllProductsByCategoryId(productCategoryId);
+			
+			if(!products.isEmpty())
+				throw new DataConflictException("This Category has related products");
+
+			productCategoryRepository.deleteById(productCategoryId);
 	}
 
 	/**
@@ -101,8 +114,8 @@ public class CategoryServiceImp implements CategoryService{
 	@Override
 	public ProductCategoryPage findProductCategoryByOffsetAndLimit(Integer offset, Integer limit) {
 
-		Page<ProductCategory> page = productCategoryRepository.findAll(PageRequest.of(offset, limit));
-			
+		Page<ProductCategory> page = productCategoryRepository.findAll(PageRequest.of(offset, limit, Sort.by("category_id")));
+
 		return new ProductCategoryPage(page.getContent(), page.getTotalElements());
 	}
 
@@ -117,8 +130,12 @@ public class CategoryServiceImp implements CategoryService{
 
 		ProductCategory productCategory = productCategoryRepository.findProductCategoryByCategoryName(productCategoryDto.getCategoryName());
 
-		if(productCategory != null)
+		if(productCategory != null) {
+
+			logger.info("This product category already exists");
+
 			throw new BadRequestException("This product category already exists");
+		}
 	}
 
 
@@ -132,8 +149,11 @@ public class CategoryServiceImp implements CategoryService{
 
 		ProductCategory currentProductCategory = productCategoryRepository.findById(productCategory.getId()).orElse(null);
 
-		if(currentProductCategory == null)
-			throw new BadRequestException("This product category not exists");
-	}
+		if(currentProductCategory == null) {
 
+			logger.info("This product category not exists");
+
+			throw new BadRequestException("This product category not exists");
+		}
+	}
 }

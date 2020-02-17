@@ -1,5 +1,7 @@
 package com.integrant.recommendation.product.repository;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,4 +31,12 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	 * @return the page
 	 */
 	public Page<Product> findAllProductsByCategoryId(Integer categoryId, Pageable pageable);
+	
+	/**
+	 * Find all products by category id.
+	 *
+	 * @param categoryId the category id
+	 * @return the list
+	 */
+	public List<Product> findAllProductsByCategoryId(Integer categoryId);
 }

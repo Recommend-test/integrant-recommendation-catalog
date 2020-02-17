@@ -20,7 +20,7 @@ import com.integrant.recommendation.product.repository.ProductRepository;
  */
 @Service
 public class ProductServiceImp implements ProductService{
-	
+
 	/** The product repository. */
 	@Autowired
 	private ProductRepository productRepository;
@@ -100,10 +100,10 @@ public class ProductServiceImp implements ProductService{
 	public ProductPage findProductsByOffsetAndLimit(Integer offset, Integer limit) {
 
 		Page<Product> page = productRepository.findAll(PageRequest.of(offset, limit));
-			
+
 		return new ProductPage(page.getContent(), page.getTotalElements());
 	}
-	
+
 	/**
 	 * Find products by category offset and limit.
 	 *
@@ -116,7 +116,7 @@ public class ProductServiceImp implements ProductService{
 	public ProductPage findProductsByCategoryOffsetAndLimit(Integer categoryId, Integer offset, Integer limit) {
 
 		Page<Product> page = productRepository.findAllProductsByCategoryId(categoryId, PageRequest.of(offset, limit));
-			
+
 		return new ProductPage(page.getContent(), page.getTotalElements());
 	}
 
@@ -131,10 +131,13 @@ public class ProductServiceImp implements ProductService{
 
 		Product product = productRepository.findProductByProductName(productDto.getName());
 
-		if(product != null)
-			throw new BadRequestException("This product already exists");
-	}
+		if(product != null) {
 
+			logger.info("This product already exists");
+
+			throw new BadRequestException("This product already exists");
+		}
+	}
 	/**
 	 * Validate product.
 	 *
@@ -145,8 +148,12 @@ public class ProductServiceImp implements ProductService{
 
 		Product currentProduct = productRepository.findById(product.getId()).orElse(null);
 
-		if(currentProduct == null)
+		if(currentProduct == null) {
+
+			logger.info("This product not exists");
+
 			throw new BadRequestException("This product not exists");
+		}
 	}
 
 

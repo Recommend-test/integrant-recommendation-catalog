@@ -75,6 +75,14 @@ public class ControllerAdvisor {
 				HttpStatus.BAD_REQUEST.value(), fieldErrors.get(0).getDefaultMessage());
 
 		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(DataConflictException.class)
+	public ResponseEntity<Object> handleDataConflictException(DataConflictException ex, WebRequest request) {
+		
+		RecommendationErrorResponse error = new RecommendationErrorResponse(LocalDateTime.now(), 
+				HttpStatus.CONFLICT.value(), ex.getMessage());
 
+		return new ResponseEntity<>(error, HttpStatus.CONFLICT);
 	}
 }

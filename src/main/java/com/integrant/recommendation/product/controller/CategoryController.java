@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.integrant.recommendation.product.dto.CategoryDto;
 import com.integrant.recommendation.product.exceptions.BadRequestException;
 import com.integrant.recommendation.product.exceptions.DataConflictException;
+import com.integrant.recommendation.product.exceptions.ResourceNotFoundException;
 import com.integrant.recommendation.product.model.ProductCategory;
 import com.integrant.recommendation.product.model.ProductCategoryPage;
 import com.integrant.recommendation.product.service.CategoryServiceImp;
@@ -90,10 +91,11 @@ public class CategoryController {
 	 *
 	 * @param id the id
 	 * @return the all catalogs
+	 * @throws ResourceNotFoundException 
 	 */
 	@ApiOperation(value = "get Product Category by Id")
 	@GetMapping("/categories/{id}")
-	public ProductCategory getProductCategoryById(@Validated @PathVariable Integer id) {
+	public ProductCategory getProductCategoryById(@Validated @PathVariable Integer id) throws ResourceNotFoundException {
 
 		return categoryService.findProductCategory(id);
 	}
@@ -132,10 +134,11 @@ public class CategoryController {
 	 *
 	 * @param id the id
 	 * @throws DataConflictException the data conflict exception
+	 * @throws ResourceNotFoundException 
 	 */
 	@ApiOperation(value = "delete Product Category by Id")
 	@DeleteMapping("/categories/{id}")
-	public void deleteProductCategoryById(@Validated @PathVariable Integer id) throws DataConflictException {
+	public void deleteProductCategoryById(@Validated @PathVariable Integer id) throws DataConflictException, ResourceNotFoundException {
 
 		categoryService.deleteProductCategory(id);
 	}

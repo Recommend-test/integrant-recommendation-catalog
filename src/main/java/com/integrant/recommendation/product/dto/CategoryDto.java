@@ -1,16 +1,29 @@
 package com.integrant.recommendation.product.dto;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.integrant.recommendation.product.model.ProductCategory;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 
 /**
  * The Class ProductCategoryDto.
  */
+@Getter
+@Setter 
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class CategoryDto implements Serializable {	
 
 	/** The Constant serialVersionUID. */
@@ -20,30 +33,6 @@ public class CategoryDto implements Serializable {
 	@NotNull(message = "Category Name must not be null")
 	@NotEmpty(message = "Category Name must not be empty")
 	private String categoryName;
-
-	/**
-	 * Instantiates a new product category dto.
-	 */
-	public CategoryDto() {
-	}
-
-	/**
-	 * Instantiates a new product category dto.
-	 *
-	 * @param categoryName the category name
-	 */
-	public CategoryDto(String categoryName) {
-		this.categoryName = categoryName;
-	}
-
-	/**
-	 * Gets the category name.
-	 *
-	 * @return the category name
-	 */
-	public String getCategoryName() {
-		return categoryName;
-	}
 
 	/**
 	 * Builds the.

@@ -16,6 +16,7 @@ import org.springframework.web.context.request.WebRequest;
 import com.integrant.recommendation.product.model.RecommendationErrorResponse;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ControllerAdvisor.
  */
@@ -77,6 +78,13 @@ public class ControllerAdvisor {
 		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 	}
 	
+	/**
+	 * Handle data conflict exception.
+	 *
+	 * @param ex the ex
+	 * @param request the request
+	 * @return the response entity
+	 */
 	@ExceptionHandler(DataConflictException.class)
 	public ResponseEntity<Object> handleDataConflictException(DataConflictException ex, WebRequest request) {
 		
@@ -84,5 +92,21 @@ public class ControllerAdvisor {
 				HttpStatus.CONFLICT.value(), ex.getMessage());
 
 		return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+	}
+	
+	/**
+	 * Handle resource not found exception.
+	 *
+	 * @param ex the ex
+	 * @param request the request
+	 * @return the response entity
+	 */
+	@ExceptionHandler(ResourceNotFoundException.class)
+	public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
+		
+		RecommendationErrorResponse error = new RecommendationErrorResponse(LocalDateTime.now(), 
+				HttpStatus.NOT_FOUND.value(), ex.getMessage());
+
+		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
 	}
 }

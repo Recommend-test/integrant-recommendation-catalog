@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.integrant.recommendation.product.dto.ProductDto;
 import com.integrant.recommendation.product.exceptions.BadRequestException;
+import com.integrant.recommendation.product.exceptions.ResourceNotFoundException;
 import com.integrant.recommendation.product.model.Product;
 import com.integrant.recommendation.product.model.ProductPage;
 import com.integrant.recommendation.product.service.ProductServiceImp;
@@ -91,10 +92,11 @@ public class ProductController {/**
 		 *
 		 * @param id the id
 		 * @return the product by id
+		 * @throws ResourceNotFoundException 
 		 */
 		@ApiOperation(value = "get Product by Id")
 		@GetMapping("/products/{id}")
-		public Product getProductById(@Validated @PathVariable Integer id) {
+		public Product getProductById(@Validated @PathVariable Integer id) throws ResourceNotFoundException {
 
 			return productService.findProduct(id);
 		}
@@ -146,10 +148,11 @@ public class ProductController {/**
 		 * Delete product by id.
 		 *
 		 * @param id the id
+		 * @throws ResourceNotFoundException 
 		 */
 		@ApiOperation(value = "delete Product by Id")
 		@DeleteMapping("/products/{id}")
-		public void deleteProductById(@Validated @PathVariable Integer id) {
+		public void deleteProductById(@Validated @PathVariable Integer id) throws ResourceNotFoundException {
 
 			productService.deleteProduct(id);
 		}

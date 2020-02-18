@@ -1,6 +1,7 @@
 package com.integrant.recommendation.product.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -14,9 +15,20 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 /**
  * The Class ProductCategory.
  */
+@Getter
+@Setter 
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 @Entity
 @Table(name="PRODUCT_CATEGORY")
 public class ProductCategory implements Serializable {
@@ -41,12 +53,6 @@ public class ProductCategory implements Serializable {
 
 	/**
 	 * Instantiates a new product category.
-	 */
-	public ProductCategory() {
-	}
-
-	/**
-	 * Instantiates a new product category.
 	 *
 	 * @param id the id
 	 */
@@ -61,43 +67,6 @@ public class ProductCategory implements Serializable {
 	 */
 	public ProductCategory(String categoryName) {
 		this.categoryName = categoryName;
-	}
-
-	/**
-	 * Gets the id.
-	 *
-	 * @return the id
-	 */
-	public Integer getId() {
-		return id;
-	}
-
-	/**
-	 * Gets the category name.
-	 *
-	 * @return the category name
-	 */
-	public String getCategoryName() {
-		return categoryName;
-	}
-	
-	/**
-	 * Gets the products.
-	 *
-	 * @return the products
-	 */
-	public List<Product> getProducts() {
-		return products;
-	}
-
-	/**
-	 * To string.
-	 *
-	 * @return the string
-	 */
-	@Override
-	public String toString() {
-		return "ProductCategory [id=" + id + ", categoryName=" + categoryName + ", products=" + products + "]";
 	}
 }
 

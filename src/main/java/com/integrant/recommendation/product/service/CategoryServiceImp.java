@@ -10,9 +10,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.integrant.recommendation.product.constants.AppConstants;
 import com.integrant.recommendation.product.dto.CategoryDto;
 import com.integrant.recommendation.product.exceptions.BadRequestException;
 import com.integrant.recommendation.product.exceptions.DataConflictException;
+import com.integrant.recommendation.product.exceptions.ResourceNotFoundException;
 import com.integrant.recommendation.product.model.Product;
 import com.integrant.recommendation.product.model.ProductCategory;
 import com.integrant.recommendation.product.model.ProductCategoryPage;
@@ -28,7 +30,7 @@ public class CategoryServiceImp implements CategoryService{
 	/** The product category repository. */
 	@Autowired
 	private CategoryRepository productCategoryRepository;
-	
+
 	@Autowired
 	private ProductRepository productRepository;
 
@@ -69,9 +71,14 @@ public class CategoryServiceImp implements CategoryService{
 	 * @return the product category
 	 */
 	@Override
-	public ProductCategory findProductCategory(Integer productCategoryId) {
+	public ProductCategory findProductCategory(Integer productCategoryId) throws ResourceNotFoundException{
 
-		return productCategoryRepository.findById(productCategoryId).orElse(null);
+		ProductCategory productCategory = productCategoryRepository.findById(productCategoryId).orElse(null);
+		
+		if(productCategory == null)
+			throw new ResourceNotFoundException(AppConstants.CATEGORY_NOT_EXISTS);
+
+		return productCategory;
 	}
 
 	/**
@@ -79,16 +86,22 @@ public class CategoryServiceImp implements CategoryService{
 	 *
 	 * @param productCategoryId the product category id
 	 * @throws DataConflictException the data conflict exception
+	 * @throws ResourceNotFoundException 
 	 */
 	@Override
-	public void deleteProductCategory(Integer productCategoryId) throws DataConflictException {
+	public void deleteProductCategory(Integer productCategoryId) throws DataConflictException, ResourceNotFoundException {
 
-			List<Product> products = productRepository.findAllProductsByCategoryId(productCategoryId);
-			
-			if(!products.isEmpty())
-				throw new DataConflictException("This Category has related products");
+		ProductCategory productCategory = productCategoryRepository.findById(productCategoryId).orElse(null);
+		
+		if(productCategory == null)
+			throw new ResourceNotFoundException(AppConstants.CATEGORY_NOT_EXISTS);
+		
+		List<Product> products = productRepository.findAllProductsByCategoryId(productCategoryId);
 
-			productCategoryRepository.deleteById(productCategoryId);
+		if(!products.isEmpty())
+			throw new DataConflictException(AppConstants.CATEGORY_HAS_RELATED_PRODUCTS);
+
+		productCategoryRepository.deleteById(productCategoryId);
 	}
 
 	/**
@@ -132,9 +145,9 @@ public class CategoryServiceImp implements CategoryService{
 
 		if(productCategory != null) {
 
-			logger.info("This product category already exists");
+			logger.info(AppConstants.CATEGORY_ALREADY_EXISTS);
 
-			throw new BadRequestException("This product category already exists");
+			throw new BadRequestException(AppConstants.CATEGORY_ALREADY_EXISTS);
 		}
 	}
 
@@ -151,9 +164,9 @@ public class CategoryServiceImp implements CategoryService{
 
 		if(currentProductCategory == null) {
 
-			logger.info("This product category not exists");
+			logger.info(AppConstants.CATEGORY_NOT_EXISTS);
 
-			throw new BadRequestException("This product category not exists");
+			throw new BadRequestException(AppConstants.CATEGORY_NOT_EXISTS);
 		}
 	}
 }

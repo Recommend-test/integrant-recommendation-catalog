@@ -5,6 +5,7 @@ import java.util.List;
 import com.integrant.recommendation.product.dto.CategoryDto;
 import com.integrant.recommendation.product.exceptions.BadRequestException;
 import com.integrant.recommendation.product.exceptions.DataConflictException;
+import com.integrant.recommendation.product.exceptions.ResourceNotFoundException;
 import com.integrant.recommendation.product.model.ProductCategory;
 import com.integrant.recommendation.product.model.ProductCategoryPage;
 
@@ -33,16 +34,18 @@ public interface CategoryService {
 	 *
 	 * @param productCategoryId the product category id
 	 * @return the product category
+	 * @throws ResourceNotFoundException the resource not found exception
 	 */
-	public ProductCategory findProductCategory(Integer productCategoryId);
+	public ProductCategory findProductCategory(Integer productCategoryId) throws ResourceNotFoundException;
 	
 	/**
 	 * Delete product category.
 	 *
 	 * @param productCategoryId the product category id
 	 * @throws DataConflictException the data conflict exception
+	 * @throws ResourceNotFoundException the resource not found exception
 	 */
-	public void deleteProductCategory(Integer productCategoryId) throws DataConflictException;
+	public void deleteProductCategory(Integer productCategoryId) throws DataConflictException, ResourceNotFoundException;
 	
 	/**
 	 * Update product category.

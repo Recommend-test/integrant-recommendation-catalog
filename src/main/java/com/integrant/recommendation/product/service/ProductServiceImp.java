@@ -10,8 +10,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.integrant.recommendation.product.constants.AppConstants;
 import com.integrant.recommendation.product.dto.ProductDto;
 import com.integrant.recommendation.product.exceptions.BadRequestException;
+import com.integrant.recommendation.product.exceptions.ResourceNotFoundException;
 import com.integrant.recommendation.product.model.Product;
 import com.integrant.recommendation.product.model.ProductPage;
 import com.integrant.recommendation.product.repository.ProductRepository;
@@ -20,7 +22,7 @@ import com.integrant.recommendation.product.repository.ProductRepository;
  * The Class ProductServiceImp.
  */
 @Service
-public class ProductServiceImp implements ProductService{
+public class ProductServiceImp implements ProductService {
 
 	/** The product repository. */
 	@Autowired
@@ -59,21 +61,33 @@ public class ProductServiceImp implements ProductService{
 	 *
 	 * @param productId the product id
 	 * @return the product
+	 * @throws ResourceNotFoundException 
 	 */
 	@Override
-	public Product findProduct(Integer productId) {
+	public Product findProduct(Integer productId) throws ResourceNotFoundException {
 
-		return productRepository.findById(productId).orElse(null);
+		Product product = productRepository.findById(productId).orElse(null);
+
+		if(product == null)
+			throw new ResourceNotFoundException(AppConstants.PRODUCT_NOT_EXISTS);
+
+		return product;
 	}
 
 	/**
 	 * Delete product.
 	 *
 	 * @param productId the product id
+	 * @throws ResourceNotFoundException the resource not found exception
 	 */
 	@Override
-	public void deleteProduct(Integer productId) {
+	public void deleteProduct(Integer productId) throws ResourceNotFoundException {
 
+		Product product = productRepository.findById(productId).orElse(null);
+
+		if(product == null)
+			throw new ResourceNotFoundException(AppConstants.PRODUCT_NOT_EXISTS);
+		
 		productRepository.deleteById(productId);
 	}
 
@@ -134,9 +148,9 @@ public class ProductServiceImp implements ProductService{
 
 		if(product != null) {
 
-			logger.info("This product already exists");
+			logger.info(AppConstants.PRODUCT_ALREADY_EXISTS);
 
-			throw new BadRequestException("This product already exists");
+			throw new BadRequestException(AppConstants.PRODUCT_ALREADY_EXISTS);
 		}
 	}
 	/**
@@ -149,12 +163,9 @@ public class ProductServiceImp implements ProductService{
 
 		Product currentProduct = productRepository.findById(product.getId()).orElse(null);
 
-		if(currentProduct == null) {
+		if(currentProduct == null)
+			throw new BadRequestException(AppConstants.PRODUCT_NOT_EXISTS);
 
-			logger.info("This product not exists");
-
-			throw new BadRequestException("This product not exists");
-		}
 	}
 
 

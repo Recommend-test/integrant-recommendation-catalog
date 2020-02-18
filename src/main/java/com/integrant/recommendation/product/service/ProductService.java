@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.integrant.recommendation.product.dto.ProductDto;
 import com.integrant.recommendation.product.exceptions.BadRequestException;
+import com.integrant.recommendation.product.exceptions.ResourceNotFoundException;
 import com.integrant.recommendation.product.model.Product;
 import com.integrant.recommendation.product.model.ProductPage;
 
@@ -32,15 +33,17 @@ public interface ProductService {
 	 *
 	 * @param productId the product id
 	 * @return the product
+	 * @throws ResourceNotFoundException the resource not found exception
 	 */
-	public Product findProduct(Integer productId);
+	public Product findProduct(Integer productId) throws ResourceNotFoundException;
 	
 	/**
 	 * Delete product.
 	 *
 	 * @param productId the product id
+	 * @throws ResourceNotFoundException the resource not found exception
 	 */
-	public void deleteProduct(Integer productId);
+	public void deleteProduct(Integer productId) throws ResourceNotFoundException;
 	
 	/**
 	 * Update product.

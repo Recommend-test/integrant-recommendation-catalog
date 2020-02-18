@@ -1,7 +1,6 @@
 package com.integrant.recommendation.product.model;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 import lombok.AllArgsConstructor;

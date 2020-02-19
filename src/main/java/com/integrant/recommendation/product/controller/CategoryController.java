@@ -33,7 +33,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 /**
- * The Class ProductCatalogController.
+ * The Class CategoryController.
  */
 
 @Api(value="Operations pertaining to Product Categories Management")

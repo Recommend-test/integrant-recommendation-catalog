@@ -137,11 +137,11 @@ public class ProductController {/**
 		 */
 		@ApiOperation(value = "update Product")
 		@PutMapping("/products")
-		public void updateProduct(@Validated @RequestBody Product product) throws BadRequestException {
+		public void updateProduct(@Validated @RequestBody ProductDto productDto) throws BadRequestException {
 
-			productService.validateProduct(product);
+			productService.validateProductForUpdate(productDto);
 			
-			productService.updateProduct(product);
+			productService.updateProduct(productDto.buildForUpdate());
 		}
 		
 		/**

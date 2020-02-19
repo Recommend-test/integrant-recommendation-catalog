@@ -10,7 +10,6 @@ import com.integrant.recommendation.product.model.ProductCategory;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 
@@ -18,7 +17,6 @@ import lombok.ToString;
  * The Class ProductCategoryDto.
  */
 @Getter
-@Setter 
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
@@ -26,6 +24,9 @@ public class CategoryDto implements Serializable {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	/** The id. */
+	private Integer id;
 
 	/** The category name. */
 	@NotNull(message = "Category Name must not be null")
@@ -39,6 +40,15 @@ public class CategoryDto implements Serializable {
 	 */
 	public ProductCategory build() {
 		return new ProductCategory(categoryName);
+	}
+	
+	/**
+	 * Builds the for update.
+	 *
+	 * @return the product category
+	 */
+	public ProductCategory buildForUpdate() {
+		return new ProductCategory(id, categoryName);
 	}
 }
 

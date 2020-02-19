@@ -122,11 +122,11 @@ public class CategoryController {
 	 */
 	@ApiOperation(value = "update Product Category")
 	@PutMapping("/categories")
-	public void updateProductCategory(@Validated @RequestBody ProductCategory productCategory) throws BadRequestException {
+	public void updateProductCategory(@Validated @RequestBody CategoryDto productCategoryDto) throws BadRequestException {
 
-		categoryService.validateProductCategory(productCategory);
+		categoryService.validateProductCategoryForUpdate(productCategoryDto);
 		
-		categoryService.updateProductCategory(productCategory);
+		categoryService.updateProductCategory(productCategoryDto.buildForUpdate());
 	}
 	
 	/**

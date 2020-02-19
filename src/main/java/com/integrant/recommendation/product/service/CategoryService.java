@@ -73,10 +73,10 @@ public interface CategoryService {
 	public void validateProductCategoryDto(CategoryDto productCategoryDto) throws BadRequestException;
 	
 	/**
-	 * Validate product category.
+	 * Validate product category for update.
 	 *
-	 * @param productCategory the product category
+	 * @param productCategoryDto the product category dto
 	 * @throws BadRequestException the bad request exception
 	 */
-	public void validateProductCategory(ProductCategory productCategory) throws BadRequestException;
+	public void validateProductCategoryForUpdate(CategoryDto productCategoryDto) throws BadRequestException;
 }

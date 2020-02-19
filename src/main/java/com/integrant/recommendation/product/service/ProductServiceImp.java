@@ -2,8 +2,6 @@ package com.integrant.recommendation.product.service;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,10 +25,6 @@ public class ProductServiceImp implements ProductService {
 	/** The product repository. */
 	@Autowired
 	private ProductRepository productRepository;
-
-	/** The logger. */
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
-
 
 	/**
 	 * Save product.
@@ -87,7 +81,7 @@ public class ProductServiceImp implements ProductService {
 
 		if(product == null)
 			throw new ResourceNotFoundException(AppConstants.PRODUCT_NOT_EXISTS);
-		
+
 		productRepository.deleteById(productId);
 	}
 
@@ -146,27 +140,26 @@ public class ProductServiceImp implements ProductService {
 
 		Product product = productRepository.findProductByProductName(productDto.getName());
 
-		if(product != null) {
-
-			logger.info(AppConstants.PRODUCT_ALREADY_EXISTS);
-
+		if(product != null) 
 			throw new BadRequestException(AppConstants.PRODUCT_ALREADY_EXISTS);
-		}
+
 	}
+	
 	/**
-	 * Validate product.
+	 * Validate product for update.
 	 *
-	 * @param product the product
+	 * @param productDto the product dto
 	 * @throws BadRequestException the bad request exception
 	 */
-	public void validateProduct(Product product) throws BadRequestException {
+	public void validateProductForUpdate(ProductDto productDto) throws BadRequestException {
+		
+		if(productDto.getId() == null)
+			throw new BadRequestException(AppConstants.INVALID_PRODUCT_ID);
 
-		Product currentProduct = productRepository.findById(product.getId()).orElse(null);
+		Product currentProduct = productRepository.findById(productDto.getId()).orElse(null);
 
 		if(currentProduct == null)
 			throw new BadRequestException(AppConstants.PRODUCT_NOT_EXISTS);
 
 	}
-
-
 }

@@ -27,4 +27,9 @@ public final class AppConstants {
 	/** The Constant CATEGORY_HAS_RELATED_PRODUCTS. */
 	public static final String CATEGORY_HAS_RELATED_PRODUCTS = "This Category has related products";
 
+	/** The Constant INVALID_CATEGORY_ID. */
+	public static final String INVALID_CATEGORY_ID = "Invalid category id";
+
+	public static final String INVALID_PRODUCT_ID = "Invalid product id";
+
 }

@@ -11,14 +11,12 @@ import com.integrant.recommendation.product.model.ProductCategory;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 /**
  * The Class ProductDto.
  */
 @Getter
-@Setter 
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
@@ -26,6 +24,9 @@ public class ProductDto  implements Serializable {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	/** The id. */
+	private Integer id;
 
 	/** The product name. */
 	@NotNull(message = "Product Name must not be null")
@@ -48,5 +49,14 @@ public class ProductDto  implements Serializable {
 	 */
 	public Product build(Integer categoryId) {
 		return new Product(name, description, new ProductCategory(categoryId));
+	}
+	
+	/**
+	 * Builds the for update.
+	 *
+	 * @return the product
+	 */
+	public Product buildForUpdate() {
+		return new Product(id, name, description, new ProductCategory(categoryId));
 	}
 }

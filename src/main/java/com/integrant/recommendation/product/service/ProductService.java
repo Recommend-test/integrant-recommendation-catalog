@@ -81,11 +81,11 @@ public interface ProductService {
 	public void validateProductDto(ProductDto productDto) throws BadRequestException;
 	
 	/**
-	 * Validate product.
+	 * Validate product for update.
 	 *
-	 * @param product the product
+	 * @param productDto the product dto
 	 * @throws BadRequestException the bad request exception
 	 */
-	public void validateProduct(Product product) throws BadRequestException;
+	public void validateProductForUpdate(ProductDto productDto) throws BadRequestException;
 
 }

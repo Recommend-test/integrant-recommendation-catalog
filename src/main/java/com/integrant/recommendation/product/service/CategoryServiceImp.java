@@ -37,7 +37,6 @@ public class CategoryServiceImp implements CategoryService{
 	/** The logger. */
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-
 	/**
 	 * Save product category.
 	 *
@@ -153,14 +152,17 @@ public class CategoryServiceImp implements CategoryService{
 
 
 	/**
-	 * Validate product category.
+	 * Validate product category for update.
 	 *
-	 * @param productCategory the product category
+	 * @param productCategoryDto the product category dto
 	 * @throws BadRequestException the bad request exception
 	 */
-	public void validateProductCategory(ProductCategory productCategory) throws BadRequestException {
+	public void validateProductCategoryForUpdate(CategoryDto productCategoryDto) throws BadRequestException {
+		
+		if(productCategoryDto.getId() == null)
+			throw new BadRequestException(AppConstants.INVALID_CATEGORY_ID);
 
-		ProductCategory currentProductCategory = productCategoryRepository.findById(productCategory.getId()).orElse(null);
+		ProductCategory currentProductCategory = productCategoryRepository.findById(productCategoryDto.getId()).orElse(null);
 
 		if(currentProductCategory == null) {
 

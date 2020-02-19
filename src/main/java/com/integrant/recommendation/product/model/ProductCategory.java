@@ -16,14 +16,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 /**
  * The Class ProductCategory.
  */
 @Getter
-@Setter 
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
@@ -64,6 +62,17 @@ public class ProductCategory implements Serializable {
 	 * @param categoryName the category name
 	 */
 	public ProductCategory(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
+	/**
+	 * Instantiates a new product category.
+	 *
+	 * @param id the id
+	 * @param categoryName the category name
+	 */
+	public ProductCategory(Integer id, String categoryName) {
+		this.id = id;
 		this.categoryName = categoryName;
 	}
 }

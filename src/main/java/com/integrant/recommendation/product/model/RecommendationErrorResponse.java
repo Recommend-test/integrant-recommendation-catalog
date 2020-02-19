@@ -14,7 +14,6 @@ import lombok.ToString;
  * The Class RecommendationErrorResponse.
  */
 @Getter
-@Setter 
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString

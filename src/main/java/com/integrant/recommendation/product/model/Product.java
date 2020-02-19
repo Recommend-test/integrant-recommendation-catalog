@@ -23,7 +23,6 @@ import lombok.ToString;
  * The Class Product.
  */
 @Getter
-@Setter 
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString

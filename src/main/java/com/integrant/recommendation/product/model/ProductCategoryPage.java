@@ -13,7 +13,6 @@ import lombok.ToString;
  * The Class ProductCategoryPage.
  */
 @Getter
-@Setter 
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString

@@ -1,0 +1,1 @@
+mongo --eval "var MONGO_USERNAME = '$MONGO_USERNAME'" mongodb-setup-js
